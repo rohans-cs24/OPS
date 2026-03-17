@@ -3,7 +3,7 @@
 int main() {
     int n, i, time = 0, smallest;
     int bt[20], at[20], pr[20];
-    int remaining[20], wt[20], tat[20];
+    int remaining[20], wt[20], tat[20], ct[20];
     int complete = 0;
     float avg_wt = 0, avg_tat = 0;
 
@@ -43,19 +43,22 @@ int main() {
 
         if(remaining[smallest] == 0) {
             complete++;
-            wt[smallest] = time - at[smallest] - bt[smallest];
-            tat[smallest] = time - at[smallest];
+
+            ct[smallest] = time;  
+
+            tat[smallest] = ct[smallest] - at[smallest];
+            wt[smallest] = tat[smallest] - bt[smallest];
 
             avg_wt += wt[smallest];
             avg_tat += tat[smallest];
         }
     }
 
-    printf("\nProcess\tAT\tBT\tPriority\tWT\tTAT\n");
+    printf("\nProcess\tAT\tBT\tPriority\tCT\tWT\tTAT\n");
 
     for(i = 0; i < n; i++) {
-        printf("P%d\t%d\t%d\t%d\t\t%d\t%d\n",
-               i+1, at[i], bt[i], pr[i], wt[i], tat[i]);
+        printf("P%d\t%d\t%d\t%d\t\t%d\t%d\t%d\n",
+               i+1, at[i], bt[i], pr[i], ct[i], wt[i], tat[i]);
     }
 
     printf("\nAverage Waiting Time = %.2f", avg_wt/n);
