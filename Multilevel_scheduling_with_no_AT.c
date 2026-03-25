@@ -1,4 +1,3 @@
-----------------------MULTILEVEL SCHEDULING------------------------------
 #include <stdio.h>
 #include <string.h>
 
@@ -8,10 +7,10 @@ struct process {
     int wt;
     int tat;
     int ct;
-    char type[10]; // "sys" or "user"
+    char type[10];
 };
 
-// FCFS with start time
+// FCFS 
 void fcfs(struct process p[], int n, int start_time) {
     int i;
 
@@ -58,7 +57,7 @@ int main() {
     struct process all[n], sys[n], user[n];
     int sys_count = 0, user_count = 0;
 
-    // Input
+
     for(i = 0; i < n; i++) {
         all[i].pid = i + 1;
 
@@ -70,7 +69,7 @@ int main() {
         printf("Enter Queue Type (sys/user): ");
         scanf("%s", all[i].type);
 
-        // Separate into queues
+  
         if(strcmp(all[i].type, "sys") == 0) {
             sys[sys_count++] = all[i];
         } else {
@@ -78,18 +77,16 @@ int main() {
         }
     }
 
-    // Execute System Queue first
     fcfs(sys, sys_count, 0);
 
-    // Get last completion time
+
     int last_ct = 0;
     if(sys_count > 0)
         last_ct = sys[sys_count - 1].ct;
 
-    // Execute User Queue next
+
     fcfs(user, user_count, last_ct);
 
-    // Display
     display(sys, sys_count, "System");
     display(user, user_count, "User");
 
